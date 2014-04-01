@@ -1,14 +1,8 @@
-GEM
-  remote: http://rubygems.org/
+GIT
+  remote: git://github.com/jipiboily/fourchette.git
+  revision: e6b69c86de5d519b77dd695a9da106cf1b7d6840
   specs:
-    addressable (2.3.6)
-    backports (3.6.0)
-    celluloid (0.15.2)
-      timers (~> 1.1.0)
-    excon (0.32.1)
-    faraday (0.9.0)
-      multipart-post (>= 1.2, < 3)
-    fourchette (0.0.1)
+    fourchette (0.0.2)
       bundler (~> 1.5)
       git (~> 1.2.6)
       heroics (= 0.0.2)
@@ -18,6 +12,27 @@ GEM
       sinatra (~> 1.4.4)
       sinatra-contrib (~> 1.4.2)
       sucker_punch (~> 1.0.2)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    addressable (2.3.6)
+    backports (3.6.0)
+    celluloid (0.15.2)
+      timers (~> 1.1.0)
+    cloudflare (2.0.1)
+      json (~> 1)
+    coderay (1.1.0)
+    columnize (0.3.6)
+    debugger (1.6.6)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.2)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.2)
+    excon (0.32.1)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     git (1.2.6)
     heroics (0.0.2)
       excon
@@ -33,8 +48,10 @@ GEM
     heroku-api (0.3.18)
       excon (~> 0.27)
       multi_json (~> 1.8)
+    json (1.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
+    method_source (0.8.2)
     mime-types (2.2)
     moneta (0.7.20)
     multi_json (1.9.2)
@@ -42,6 +59,13 @@ GEM
     netrc (0.7.7)
     octokit (3.0.0)
       sawyer (~> 0.5.3)
+    pry (0.9.12.6)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-debugger (0.2.2)
+      debugger (~> 1.3)
+      pry (~> 0.9.10)
     puma (2.7.1)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
@@ -67,6 +91,7 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (~> 1.3)
+    slop (3.5.0)
     sucker_punch (1.0.3)
       celluloid (~> 0.15.2)
     tilt (1.4.1)
@@ -76,5 +101,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fourchette
+  cloudflare
+  fourchette!
+  pry-debugger
   puma
