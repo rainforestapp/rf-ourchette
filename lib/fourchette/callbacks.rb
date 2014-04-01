@@ -3,7 +3,9 @@ require_relative '../rainforest'
 class Fourchette::Callbacks
   def initialize params
     @params = params
-    @cloudflare = Rainforest::Cloudflare.new(['app', 'admin', 'status-monitoring','turkdesk'])
+    @apps = ['app', 'admin', 'status-monitoring','turkdesk']
+    @cloudflare = Rainforest::Cloudflare.new(@apps)
+    @heroku = Fourchette::Heroku.new
   end
 
   def before
@@ -30,6 +32,9 @@ class Fourchette::Callbacks
     logger.info 'Creating subdomains...'
     heroku_fork_url = "#{heroku_fork.fork_name}.herokuapp.com"
     @cloudflare.create_subdomains(pr_number, heroku_fork_url)
+    @apps.each do |app|
+      @heroku.client.domain.create(heroku_fork.fork_name, { hostname: "#{app}-#{pr_number}.#{ENV['FOURCHETTE_CLOUDFLARE_DOMAIN']}" })
+    end
   end
 
   def delete_subdomains
