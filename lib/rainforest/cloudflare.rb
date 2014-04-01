@@ -13,7 +13,12 @@ class Rainforest::Cloudflare
     @apps.each do |app|
       record_name = "#{app}-#{pull_request_id}"
       logger.info "Creating CNAME #{record_name} to point to #{heroku_app_url}"
-      @client.rec_new(@zone, 'CNAME', record_name, heroku_app_url, 1)
+      begin
+        @client.rec_new(@zone, 'CNAME', record_name, heroku_app_url, 1)
+      rescue CloudFlare::RequestError => ex
+        logger.error ex
+        logger.error ex.message
+      end
     end
   end
   
@@ -23,7 +28,12 @@ class Rainforest::Cloudflare
       record_name = "#{app}-#{pull_request_id}"
       record_id = dns_record_id(record_name)
       logger.info "Deleting CNAME #{record_name}"
-      @client.rec_delete(@zone, record_id)
+      begin
+        @client.rec_delete(@zone, record_id)
+      rescue CloudFlare::RequestError => ex
+        logger.error ex
+        logger.error ex.message
+      end
     end
   end
   
