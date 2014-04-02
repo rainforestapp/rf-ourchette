@@ -9,3 +9,4 @@ group :development do
 end
 
 gem 'newrelic_rpm'
+gem 'sentry-raven'
