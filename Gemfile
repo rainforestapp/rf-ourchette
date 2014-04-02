@@ -7,3 +7,5 @@ gem 'cloudflare'
 group :development do
   gem 'pry-debugger'
 end
+
+gem 'newrelic_rpm'

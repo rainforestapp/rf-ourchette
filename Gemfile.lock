@@ -57,6 +57,7 @@ GEM
     multi_json (1.9.2)
     multipart-post (2.0.0)
     netrc (0.7.7)
+    newrelic_rpm (3.7.3.204)
     octokit (3.0.0)
       sawyer (~> 0.5.3)
     pry (0.9.12.6)
@@ -103,5 +104,6 @@ PLATFORMS
 DEPENDENCIES
   cloudflare
   fourchette!
+  newrelic_rpm
   pry-debugger
   puma
