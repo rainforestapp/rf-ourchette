@@ -35,7 +35,9 @@ class Fourchette::Callbacks
     heroku_fork_url = "#{heroku_fork.fork_name}.herokuapp.com"
     @cloudflare.create_subdomains(pr_number, heroku_fork_url)
     @apps.each do |app|
-      @heroku.client.domain.create(heroku_fork.fork_name, { hostname: "#{app}-#{pr_number}.#{ENV['FOURCHETTE_CLOUDFLARE_DOMAIN']}" })
+      Rainforest::ZONES.each do |zone|
+        @heroku.client.domain.create(heroku_fork.fork_name, { hostname: "#{app}-#{pr_number}.#{zone}" })
+      end
     end
   end
 
