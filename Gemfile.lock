@@ -1,17 +1,16 @@
 GIT
   remote: git://github.com/jipiboily/fourchette.git
-  revision: 9f1f0fce492ce3a6f9f7cea19ab373174c590d99
+  revision: 2a18e2b1f2f08c7e66aab1e223328ad4b793ffb0
   specs:
     fourchette (0.0.2)
-      bundler (~> 1.5)
-      git (~> 1.2.6)
+      git
       heroics (= 0.0.2)
-      heroku (~> 3.3.0)
-      octokit (~> 3.0.0)
+      heroku
+      octokit
       rake
-      sinatra (~> 1.4.4)
-      sinatra-contrib (~> 1.4.2)
-      sucker_punch (~> 1.0.2)
+      sinatra
+      sinatra-contrib
+      sucker_punch
 
 GEM
   remote: http://rubygems.org/
@@ -40,7 +39,7 @@ GEM
       moneta
       multi_json
       netrc
-    heroku (3.3.0)
+    heroku (3.6.0)
       heroku-api (~> 0.3.17)
       launchy (>= 0.3.2)
       netrc (~> 0.7.7)
