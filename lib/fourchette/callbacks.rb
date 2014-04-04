@@ -13,17 +13,19 @@ class Fourchette::Callbacks
   end
 
   def after
-    logger.info 'After callbacks...'
-    case @params['action']
-    when 'closed' # on closing a PR
-      logger.info "PR was closed..."
-      delete_subdomains
-    when 'reopened' # re-opening a closed PR
-      logger.info "PR was reopened..."
-      create_subdomains
-    when 'opened' # opening a new PR
-      logger.info "PR was opened..."
-      create_subdomains
+    Raven.capture do
+      logger.info 'After callbacks...'
+      case @params['action']
+      when 'closed' # on closing a PR
+        logger.info "PR was closed..."
+        delete_subdomains
+      when 'reopened' # re-opening a closed PR
+        logger.info "PR was reopened..."
+        create_subdomains
+      when 'opened' # opening a new PR
+        logger.info "PR was opened..."
+        create_subdomains
+      end
     end
   end
 
