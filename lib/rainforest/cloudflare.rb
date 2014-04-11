@@ -11,9 +11,9 @@ class Rainforest::Cloudflare
   def create_subdomains(pull_request_id, heroku_app_url)
     @apps.each do |app|
       record_name = "#{app}-#{pull_request_id}"
-      logger.info "Creating CNAME #{record_name} to point to #{heroku_app_url}"
       begin
         @zones.each do |zone|
+          logger.info "Creating CNAME #{record_name} (#{zone}) to point to #{heroku_app_url}"
           @client.rec_new(zone, 'CNAME', record_name, heroku_app_url, 1)
         end
       rescue CloudFlare::RequestError => ex
@@ -29,7 +29,7 @@ class Rainforest::Cloudflare
       @zones.each do |zone|
         record_name = "#{app}-#{pull_request_id}"
         record_id = dns_record_id(record_name, zone)
-        logger.info "Deleting CNAME #{record_name}"
+        logger.info "Deleting CNAME #{record_name} of #{zone}"
         begin
           @client.rec_delete(zone, record_id)
         rescue CloudFlare::RequestError => ex
