@@ -39,7 +39,7 @@ class Fourchette::Callbacks
     @apps.each do |app|
       Rainforest::ZONES.each do |zone|
         test_url = "#{app}-#{pr_number}.#{zone}"
-        test_urls += "\n#{test_url}"
+        test_urls += "\nhttp://#{test_url}"
         @heroku.client.domain.create(fork_name, { hostname: "#{app}-#{pr_number}.#{zone}" })
       end
     end
