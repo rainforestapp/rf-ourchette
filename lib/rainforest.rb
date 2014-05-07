@@ -1,6 +1,6 @@
-missing_env = %w{ 
-                  FOURCHETTE_CLOUDFLARE_API_KEY 
-                  FOURCHETTE_CLOUDFLARE_EMAIL 
+missing_env = %w{
+                  FOURCHETTE_CLOUDFLARE_API_KEY
+                  FOURCHETTE_CLOUDFLARE_EMAIL
                   FOURCHETTE_CLOUDFLARE_DOMAINS
                 } - ENV.keys
 
