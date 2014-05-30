@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 gem 'puma'
-gem 'fourchette', github: 'jipiboily/fourchette'
+gem 'fourchette', '~> 0.0.6'
 gem 'cloudflare'
 
 group :development do
