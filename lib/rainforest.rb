@@ -4,7 +4,7 @@ missing_env = %w{
                   FOURCHETTE_CLOUDFLARE_DOMAINS
                 } - ENV.keys
 
-if missing_env.any? do
+if missing_env.any?
   raise "missing the following environment variable(s): #{missing_env.join(", ")}"
 end
 
