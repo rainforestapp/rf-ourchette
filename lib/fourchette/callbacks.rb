@@ -8,11 +8,11 @@ class Fourchette::Callbacks
     @heroku = Fourchette::Heroku.new
   end
 
-  def before
+  def before_all
     logger.info 'Before callbacks...'
   end
 
-  def after
+  def after_all
     Raven.capture do
       logger.info 'After callbacks...'
       case @params['action']
