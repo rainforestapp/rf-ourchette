@@ -22,9 +22,11 @@ class Fourchette::Callbacks
       when 'reopened' # re-opening a closed PR
         logger.info "PR was reopened..."
         create_subdomains
+        copy_environment
       when 'opened' # opening a new PR
         logger.info "PR was opened..."
         create_subdomains
+        copy_environment
       end
     end
   end
@@ -44,6 +46,12 @@ class Fourchette::Callbacks
       end
     end
     Fourchette::GitHub.new.comment_pr(pr_number, "Test URLs: \n#{test_urls}")
+  end
+
+  def copy_environment
+    sleep 500
+    @heroku.copy_RACK_AND_RAILS_ENV_again(ENV['FOURCHETTE_HEROKU_APP_TO_FORK'] ,fork_name)
+    Fourchette::GitHub.new.comment_pr(pr_number, "RAILS_ENV and RACK_ENV should now be set to the right values")
   end
 
   def delete_subdomains
