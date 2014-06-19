@@ -21,14 +21,14 @@ class Fourchette::Callbacks
         delete_subdomains
       when 'reopened' # re-opening a closed PR
         logger.info "PR was reopened..."
-        create_subdomains
         # TODO: remove once Heroku is not overriding RACK_ENV anymore
         copy_environment
+        create_subdomains
       when 'opened' # opening a new PR
         logger.info "PR was opened..."
-        create_subdomains
         # TODO: remove once Heroku is not overriding RACK_ENV anymore
         copy_environment
+        create_subdomains
       end
     end
   end
@@ -48,14 +48,14 @@ class Fourchette::Callbacks
       end
     end
     # TODO: move back to the old comment once Heroku is not overriding RACK_ENV anymore
-    Fourchette::GitHub.new.comment_pr(pr_number, "Test URLs: \n#{test_urls}\n\n\n# WAIT FOR THE RAILS_ENV AND RACK_ENV TO BE SET TO QA, ANOTHER COMMENT WILL FOLLOW UP IN A FEW MINUTES.\n This is temporary until https://github.com/jipiboily/fourchette/issues/15 and https://github.com/heroku/heroku-buildpack-ruby/issues/277 are fixed")
+    Fourchette::GitHub.new.comment_pr(pr_number, "Test URLs: \n#{test_urls}\n\n\n# RAILS_ENV and RACK_ENV should now be set to the right values.\n This is temporary until https://github.com/jipiboily/fourchette/issues/15 and https://github.com/heroku/heroku-buildpack-ruby/issues/277 are fixed")
   end
 
   # TODO: remove once Heroku is not overriding RACK_ENV anymore
   def copy_environment
+    logger.info 'Waiting 500 seconds to force set RAILS_ENV and RACK_ENV with the correct values'
     sleep 500
     @heroku.copy_RACK_AND_RAILS_ENV_again(ENV['FOURCHETTE_HEROKU_APP_TO_FORK'] ,fork_name)
-    Fourchette::GitHub.new.comment_pr(pr_number, "RAILS_ENV and RACK_ENV should now be set to the right values")
   end
 
   def delete_subdomains
