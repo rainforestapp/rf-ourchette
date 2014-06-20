@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jipiboily/fourchette.git
-  revision: 3b72e9477ae4c72ef5a5ef973b356992152297f7
+  revision: dbe9dbd013020e8650c7fca64c7d840e91f8f28f
   specs:
     fourchette (0.0.8)
       git
