@@ -3,7 +3,7 @@ require_relative '../rainforest'
 class Fourchette::Callbacks
   def initialize params
     @params = params
-    @apps = ['app', 'admin', 'status-monitoring','turkdesk']
+    @apps = ['app', 'admin', 'status-monitoring','turkdesk', 'automation']
     @cloudflare = Rainforest::Cloudflare.new(@apps)
     @heroku = Fourchette::Heroku.new
   end
