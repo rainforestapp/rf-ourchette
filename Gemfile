@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
-ruby "2.1.1"
+ruby "2.1.2"
 
 gem 'puma'
-gem 'fourchette', '0.0.8'
+gem 'fourchette'
 gem 'cloudflare'
 
 group :development do
-  gem 'pry-debugger'
+  gem 'pry'
 end
 
 gem 'newrelic_rpm'
