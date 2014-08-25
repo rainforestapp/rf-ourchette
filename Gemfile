@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.2"
 
 gem 'puma'
-gem 'fourchette'
+gem 'fourchette', github: 'rainforestapp/fourchette', branch: 'fix-heroku-postgres-check'
 gem 'cloudflare'
 
 group :development do
