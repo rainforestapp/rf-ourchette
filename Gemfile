@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.2"
 
 gem 'puma'
-gem 'fourchette', '0.1.2'
+gem 'fourchette', github: 'rainforestapp/fourchette'
 gem 'cloudflare'
 
 group :development do
