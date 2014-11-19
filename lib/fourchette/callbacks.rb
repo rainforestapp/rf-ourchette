@@ -89,13 +89,13 @@ class Fourchette::Callbacks
         cmd = 'rake db:load_seed_dump'
         ENV['HEROKU_API_KEY'] = ENV["FOURCHETTE_HEROKU_API_KEY"]
 
-        @github.comment_pr(pr_number, "The PR code has been pushed and is ready to be seeded...starting the seed.")
+        logger.info "The PR code has been pushed and is ready to be seeded...starting the seed."
         run = Heroku::Command::Run.new([cmd], { app: fork_name })
         run.send(:run_attached, cmd)
         # TODO: figure out how to wait for run_attached to be finished
         # instead of a stupid sleep...
         sleep 300
-        @github.comment_pr(pr_number, "Seeding the database is done.")
+        @github.comment_pr(pr_number, "Seeding the database is done, and dynos were restarted.")
         @heroku.client.dyno.list(fork_name).each { |d| @heroku.client.dyno.restart(fork_name, d['id']) }
         logger.info "Seeding is done and dynos were restarted."
         break
