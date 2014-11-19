@@ -1,4 +1,8 @@
 require_relative '../rainforest'
+require 'fourchette'
+require 'heroku'
+require "heroku/command/run"
+require 'heroku-api'
 
 class Fourchette::Callbacks
   def initialize params
@@ -23,10 +27,12 @@ class Fourchette::Callbacks
         logger.info "PR was reopened..."
         # TODO: remove once Heroku is not overriding RACK_ENV anymore
         create_subdomains
+        load_seed_dump
       when 'opened' # opening a new PR
         logger.info "PR was opened..."
         # TODO: remove once Heroku is not overriding RACK_ENV anymore
         create_subdomains
+        load_seed_dump
       end
     end
   end
@@ -63,5 +69,34 @@ class Fourchette::Callbacks
 
   def fork_name
     @fork_name ||= heroku_fork.fork_name
+  end
+
+  def load_seed_dump
+    @github = Fourchette::GitHub.new
+    @heroku.client.build.list(fork_name)
+    current_build_id = @heroku.client.build.list(fork_name).last['id']
+
+
+    while
+      build_info = @heroku.client.build.info(fork_name, current_build_id)
+      case build_info['status']
+      when 'failed'
+        @github.comment_pr(pr_number, "The build failed on Heroku. See the activity tab on Heroku.")
+        fail Fourchette::DeployException
+      when 'pending'
+        sleep 30
+      when 'succeeded'
+        cmd = 'rake db:load_seed_dump'
+        ENV['HEROKU_API_KEY'] = ENV["FOURCHETTE_HEROKU_API_KEY"]
+
+        @github.comment_pr(pr_number, "The PR code has been pushed and is ready to be seeded...starting the seed.")
+        run = Heroku::Command::Run.new([cmd], { app: fork_name })
+        run.send(:run_attached, cmd)
+        @github.comment_pr(pr_number, "Seeding the database is done.")
+        @heroku.client.dyno.list(app_name).each { |d| @heroku.client.dyno.restart(app_name, d['id']) }
+        logger.info "Seeding is done and dynos were restarted."
+        break
+      end
+    end
   end
 end
