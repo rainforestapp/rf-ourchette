@@ -96,7 +96,7 @@ class Fourchette::Callbacks
         # instead of a stupid sleep...
         sleep 300
         @github.comment_pr(pr_number, "Seeding the database is done.")
-        @heroku.client.dyno.list(app_name).each { |d| @heroku.client.dyno.restart(app_name, d['id']) }
+        @heroku.client.dyno.list(fork_name).each { |d| @heroku.client.dyno.restart(fork_name, d['id']) }
         logger.info "Seeding is done and dynos were restarted."
         break
       end
