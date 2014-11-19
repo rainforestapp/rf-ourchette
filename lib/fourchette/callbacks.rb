@@ -92,6 +92,9 @@ class Fourchette::Callbacks
         @github.comment_pr(pr_number, "The PR code has been pushed and is ready to be seeded...starting the seed.")
         run = Heroku::Command::Run.new([cmd], { app: fork_name })
         run.send(:run_attached, cmd)
+        # TODO: figure out how to wait for run_attached to be finished
+        # instead of a stupid sleep...
+        sleep 300
         @github.comment_pr(pr_number, "Seeding the database is done.")
         @heroku.client.dyno.list(app_name).each { |d| @heroku.client.dyno.restart(app_name, d['id']) }
         logger.info "Seeding is done and dynos were restarted."
